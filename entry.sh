@@ -6,4 +6,4 @@ else
     export STEAM_TOKEN=""
 fi
 
-/home/steam/csgo/srcds_run -console -game csgo -usercon +game_type 0 +game_mode 0 +mapgroup mg_dust +map de_dust2 $STEAM_TOKEN -autoupdate -port 27015
+/home/steam/csgo/srcds_run -console -game csgo -usercon +game_type 0 +game_mode 0 +mapgroup mg_dust +map de_dust2 $STEAM_TOKEN -port 27015 -ip 0.0.0.0

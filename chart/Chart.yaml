@@ -1,0 +1,8 @@
+apiVersion: v2
+name: csgo
+description: Chart to deploy a CS:GO server
+
+type: application
+
+version: 0.1.0
+appVersion: "10165983"

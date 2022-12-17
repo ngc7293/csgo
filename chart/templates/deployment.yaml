@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: csgo
+  name: csgo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: csgo
+  template:
+    metadata:
+      labels:
+        app: csgo
+    spec:
+      containers:
+      - image: "{{ .Values.image.repository }}:{{ .Values.image.tag | 'latest' }}"
+        name: csgo
+        ports:
+        - containerPort: 27015
+          hostPort: 27015
+          protocol: UDP 
+        env:
+          - name: STEAM_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: steam-token
+                key: STEAM_TOKEN
+
+        volumeMounts:
+        - name: csgo-configuration-server-cfg
+          mountPath: /etc/server.cfg
+          subPath: server.cfg
+
+        - name: csgo-configuration-autoexec-cfg
+          mountPath: /etc/autoexec.cfg
+          subPath: autoexec.cfg
+          
+      volumes:
+        - name: csgo-configuration-server-cfg
+          configMap:
+            name: csgo-configuration
+            items:
+            - key: server.cfg
+              path: server.cfg
+
+        - name: csgo-configuration-autoexec-cfg
+          configMap:
+            name: csgo-configuration
+            items:
+            - key: autoexec.cfg
+              path: autoexec.cfg
